@@ -1,0 +1,105 @@
+
+class Player {
+  float x, y, gr, vel;
+  int tls;
+  int coolDown;
+  boolean salto;
+  public  Player() {
+    this.x = width/2;
+    this.y = height-50;
+    this.tls = 0;
+    this.coolDown = 300;
+    x= 50;
+    y= 450;
+    gr= 7;
+    vel= 5;
+    salto = true;
+  }
+  //Se dibuja la nave
+  void display() {
+    rect(x, y, 23, 23);
+    if (y+33<650)
+      y+= gr;
+    else
+      salto = false;
+    if (keyPressed && key == CODED)
+    {
+      switch(keyCode) {
+      case LEFT:
+        if (x >= 0)
+          x-= 15;
+        break;
+      case RIGHT:
+        if (x <= 850)
+          x+= 15;
+        break;
+      }
+      if ( keyCode == UP && !gamer.salto )
+      {
+        gamer.y-=300;
+        gamer.salto = true;
+      }
+    }
+  }
+  void shoot() {
+    if (millis() - tls > coolDown) {
+      Bullet bullet = new Bullet(this.x+13, this.y, -speed);
+      bullets.add(bullet);
+      tls = millis();
+    }
+  }
+}
+void keyPressed() {
+  if (key == 'x')
+    gamer.shoot();
+}
+
+class Bullet {
+  float x, y;
+  float velocity;
+
+  Bullet(float x, float y, float velocity) {
+    this.x = x;
+    this.y = y;
+    this.velocity = velocity;
+  }
+  void display() {
+    noStroke();
+    fill(#00CCFF);
+    circle(this.x -13, this.y-15, 20);
+  }
+  void move() {
+    this.x-=this.velocity;
+    if (this.y > height || this.y < 0) {
+      bullets.remove(this);
+    }
+  }
+}
+
+ArrayList bullets; //Declarar array para los disparos
+Player gamer; //Se declara la clase gamer
+int speed = 10; //Velocidad de movimiento
+//Se crear la ventana
+void setup() {
+  frameRate(30);
+  size(900, 650);/*tamaño del cuadro*/
+  background(0);
+  startGame();
+}
+void draw() {
+  background(0);
+  gamer.display();
+  handleBullets();
+}
+
+void handleBullets() {
+  for (int i = 0; i < bullets.size(); i++) {
+    Bullet b = (Bullet) bullets.get(i);
+    b.move();
+    b.display();
+  }
+}
+void startGame() {
+  gamer = new Player();
+  bullets = new ArrayList();
+}
