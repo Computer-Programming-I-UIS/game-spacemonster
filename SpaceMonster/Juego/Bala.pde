@@ -10,7 +10,7 @@ class Bullet {
   void display() {
     noStroke();
     fill(#00CCFF);
-    circle(this.x -13, this.y-15, 20);
+    circle(this.x+90, this.y+65, 20);
   }
   void move() {
     this.x-=this.velocity;

@@ -3,21 +3,23 @@ class Player {
   int tls;
   int coolDown;
   boolean salto;
+  PImage img;
   public  Player() {
     this.x = width/2;
     this.y = height-50;
     this.tls = 0;
     this.coolDown = 300;
     x= 50;
-    y= 450;
-    gr= 7;
+    y= 300;
+    gr= 9;
     vel= 5;
     salto = true;
+    img = loadImage("Run(1).png");
   }
   //Se dibuja la nave
   void display() {
-    rect(x, y, 23, 23);
-    if (y+33<650)
+    image(img, x, y,150,130);
+      if (y+33<300)
       y+= gr;
     else
       salto = false;
