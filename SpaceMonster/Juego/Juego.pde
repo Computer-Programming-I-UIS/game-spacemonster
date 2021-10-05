@@ -1,6 +1,6 @@
-import ddf.minim.*;
-Minim minim;
-AudioPlayer afondo;
+//import ddf.minim.*;
+//Minim minim;
+//AudioPlayer afondo;
 ArrayList bullets; //Declarar array para los disparos
 Player gamer; //Se declara la clase gamer
 int speed = 10; //Velocidad de movimiento
@@ -15,10 +15,10 @@ void setup() {
   image(fondo, 0, 0);
   image(plataforma, 0, 250);
 
-  minim = new Minim(this);
-  afondo = minim.loadFile("fondo.mp3");
-  afondo.play();
-  afondo.loop();
+//  minim = new Minim(this);
+//  afondo = minim.loadFile("fondo.mp3");
+ // afondo.play();
+//  afondo.loop();
   startGame();
 }
 void draw() {
