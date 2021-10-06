@@ -24,7 +24,7 @@ class Player {
     img[4] = loadImage("Run(4).png");
     img[5] = loadImage("Run(5).png");
     img[6] = loadImage("Run(6).png");
-    img[7] = loadImage("Salto(0).png");
+    img[7] = loadImage("Run(7).png");
     img[8] = loadImage("Salto(1).png");
     img[9] = loadImage("Salto(1).png");
     img[10] = loadImage("Salto(2).png");
@@ -33,34 +33,33 @@ class Player {
   }
   void display() {
     image(img[pos], x, y, 150, 130);
-    if (y+33<350) {
+    if (y+33<350)
       y+= gr;
-      pos = 7;
-    } else
+    else
       salto = false;
     if (keyPressed && key == CODED)
     {
       switch(keyCode) {
       case LEFT:
         if (x >= 0)
-          x-= 15;
+          x-= 5;
         pos--;
         if (pos < 0)
           pos =7;
         break;
       case RIGHT:
         if (x <= 850)
-          x+= 15;
+          x+= 5;
         pos++;
         if (pos > 7)
           pos =1;
         break;
       }
-      if ( keyCode == UP && !gamer.salto )
+      if ( keyCode == UP && !salto )
       {
-        gamer.y-=300;
-        gamer.salto = true;
-
+        y-=300;
+        salto = true;
+        pos = 0;
       }
     }
   }
