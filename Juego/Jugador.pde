@@ -24,7 +24,7 @@ class Player {
     img[4] = loadImage("Run(4).png");
     img[5] = loadImage("Run(5).png");
     img[6] = loadImage("Run(6).png");
-    img[7] = loadImage("Run(7).png");
+    img[7] = loadImage("Salto(0).png");
     img[8] = loadImage("Salto(1).png");
     img[9] = loadImage("Salto(1).png");
     img[10] = loadImage("Salto(2).png");
@@ -33,9 +33,10 @@ class Player {
   }
   void display() {
     image(img[pos], x, y, 150, 130);
-    if (y+33<350)
+    if (y+33<350) {
       y+= gr;
-    else
+      pos = 7;
+    } else
       salto = false;
     if (keyPressed && key == CODED)
     {
@@ -55,11 +56,11 @@ class Player {
           pos =1;
         break;
       }
-      if ( keyCode == UP && !salto )
+      if ( keyCode == UP && !gamer.salto )
       {
-        y-=300;
-        salto = true;
-        pos = 0;
+        gamer.y-=300;
+        gamer.salto = true;
+
       }
     }
   }
