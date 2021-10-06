@@ -11,7 +11,7 @@ class Player {
     this.tls = 0;
     this.coolDown = 300;
     x= 50;
-    y= 300;
+    y= 345;
     gr= 9;
     vel= 5;
     pos= 0;

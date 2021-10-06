@@ -1,13 +1,13 @@
-//import ddf.minim.*;
-//Minim minim;
-//AudioPlayer afondo;
+import ddf.minim.*;
+Minim minim;
+AudioPlayer afondo;
 Sprite enemy;
 PImage enemigo;
 ArrayList bullets; //Declarar array para los disparos
 Player gamer; //Se declara la clase gamer
 int speed = 10; //Velocidad de movimiento
 int posx=0;
-float distancia =0;
+int distancia =0, max_distancia;
 PImage fondo, plataforma;
 
 void setup() {
@@ -16,12 +16,12 @@ void setup() {
   fondo = loadImage("fondo.jpg");
   plataforma = loadImage("plataforma.png");
   enemigo = loadImage("0.png");
-  enemy = new Sprite(enemigo, width, 250);
-  enemy.cambio.x = -10;
-  //  minim = new Minim(this);
-  //  afondo = minim.loadFile("fondo.mp3");
-  //  afondo.play();
-  //  afondo.loop();
+  
+
+  minim = new Minim(this);
+  afondo = minim.loadFile("fondo.mp3");
+  afondo.play();
+  afondo.loop();
   startGame();
 }
 void draw() {
@@ -36,6 +36,10 @@ void draw() {
   enemy.mostrar();
   enemy.mover();
   handleBullets();
+  distancia =millis()/80;
+  textSize(20);
+  fill(255);
+  text(distancia, 800,20);
 }
 
 void handleBullets() {
@@ -48,4 +52,6 @@ void handleBullets() {
 void startGame() {
   gamer = new Player();
   bullets = new ArrayList();
+  enemy = new Sprite(enemigo, width, 250);
+  enemy.cambio.x = -10;
 }
