@@ -9,7 +9,7 @@ int distancia =0, max_distancia, menu=0;
 PImage fondo, plataforma, titulo, regla;
 PImage enemigo;
 ArrayList<Sprite>enemy;
-boolean movimiento;
+boolean movimiento,press;
 
 void setup() {
   frameRate(35);
@@ -18,10 +18,10 @@ void setup() {
   plataforma = loadImage("plataforma.png");
   titulo = loadImage("titulo.png");
   regla = loadImage("reglas.jpg");
-  /*minim = new Minim(this);
-   afondo = minim.loadFile("fondo.mp3");
-   afondo.play();
-   afondo.loop();*/
+  minim = new Minim(this);
+  afondo = minim.loadFile("fondo.mp3");
+  /*afondo.play();
+  afondo.loop()*/;
   movimiento = false;
   startGame();
 }
@@ -119,8 +119,21 @@ void setting() {
   image(fondo, posx, 0);
   salir.end();
   regresar.back();
-  if (audon.click()==false)audon.sound();
-  if (audon.click()==true)audon.sounds();
+  
+  if(mousePressed){
+     if (mouseX >((width/2)-80) && mouseX<((width/2)-80)+182 && mouseY> height/2 && mouseY <height/2+21){
+        press=!press;
+     }
+   }
+  if (press==false){
+    audon.sounds();
+    afondo.pause();
+  }
+  if (press==true){
+    audon.sound();
+    afondo.play();
+    afondo.loop();
+  }
   if (salir.click()==true)exit();
   if (regresar.click()==true)menu=0;
   salir.click();
