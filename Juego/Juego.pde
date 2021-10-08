@@ -101,23 +101,34 @@ void inicio() {
   distancia =millis()/80;
 
   // Choque balas vs enemigo
-  /* int cantBalas = bullets.size();
-   for (int i = 0; i < cantBalas; i++) {
-   println("cantBalas = " + cantBalas);
-   Bullet laBala = bullets.get(i);
-   int cantEnem = enemy.size();
-   for (int j = 0; j < cantEnem; j++) {
-   println("cantEnem = " + cantEnem);
-   Sprite miEnemigo = enemy.get(i);
-   if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
-   
-   bullets.remove(i);
-   i--;
-   cantBalas = 0;
-   miEnemigo.reset();
-   }
-   }
-   }*/
+  int cantBalas = bullets.size();
+  int indexBalaChoque = -1;
+  int indexEnemChoque = -1;
+  for (int i = 0; i < cantBalas; i++) {
+    println("cantBalas = " + cantBalas);
+    Bullet laBala = bullets.get(i);
+    int cantEnem = enemy.size();
+    for (int j = 0; j < cantEnem; j++) {
+      println("cantEnem = " + cantEnem);
+      Sprite miEnemigo = enemy.get(j);
+      if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
+        /*indexBalaChoque = i;
+        indexEnemChoque = j;
+        */
+        bullets.remove(i);
+         i--;
+         cantBalas = 0;
+         miEnemigo.reset();
+         
+      }
+    }
+  }
+/*
+  if (indexBalaChoque != -1) bullets.remove(indexBalaChoque);
+  if (indexEnemChoque != -1) {
+    Sprite miEnemigo = enemy.get(indexEnemChoque);
+    miEnemigo.reset();
+  }*/
 
   textSize(20);
   fill(255);
