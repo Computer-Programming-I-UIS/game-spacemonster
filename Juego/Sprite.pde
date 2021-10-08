@@ -19,9 +19,12 @@ class Sprite {
   {
     center.x += cambio.x;
     if (center.x < 0) {
-      center.x = width;
-      center.y = random(200, 400);
+      reset();
     }
+  }
+  void reset() {
+    center.x = width;
+    center.y = random(200, 400);
   }
   boolean izquierda()
   {

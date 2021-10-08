@@ -2,14 +2,15 @@ import ddf.minim.*;
 Minim minim;//Se declaran las clases Minim,Sprite, Player
 AudioPlayer afondo;
 Player gamer;
-Botones jugar, salir, opciones, audon, regresar, reglas;
-ArrayList bullets; //Declarar array para los disparos
+Botones jugar, salir, opciones, audon, regresar, reglas, creditos;
+ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10;
 int distancia =0, max_distancia, menu=0;
-PImage fondo, plataforma, titulo, regla;
+PImage fondo, plataforma, titulo, regla, credito;
+PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes;
 PImage enemigo;
 ArrayList<Sprite>enemy;
-boolean movimiento,press;
+boolean movimiento, press;
 
 void setup() {
   frameRate(35);
@@ -20,8 +21,17 @@ void setup() {
   regla = loadImage("reglas.jpg");
   minim = new Minim(this);
   afondo = minim.loadFile("fondo.mp3");
-  /*afondo.play();
-  afondo.loop()*/;
+  credito = loadImage("creditos.png");
+  diseñoentorno = loadImage("disenoentorno.png");
+  apk = loadImage("apk.png");
+  Plataforma = loadImage("Plataforma-CC.png");
+  diseñopersonajes = loadImage("disenopersonajes.png");
+  personajes = loadImage("personajes.png");
+  audios = loadImage("audios.png");
+  musica = loadImage("musica.png");
+  diseñadores = loadImage("disenadores.png");
+  grupo = loadImage("grupo.png");
+  programadores = loadImage("programadores.png");
   movimiento = false;
   startGame();
 }
@@ -34,9 +44,11 @@ void draw() {
     opciones.settings();
     salir.end();
     reglas.rules();
+    creditos.make();
     if (jugar.click()==true)menu=1;
     if (opciones.click()==true)menu=2;
     if (reglas.click()==true)menu=3;
+    if (creditos.click()==true)menu=4;
     if (salir.click()==true)exit();
     break;
   case 1:
@@ -48,6 +60,9 @@ void draw() {
   case 3:
     rules();
     break;
+  case 4:
+    creadores();
+    break;
   }
   jugar.click();
   opciones.click();
@@ -55,6 +70,7 @@ void draw() {
   regresar.click();
   audon.click();
   reglas.click();
+  creditos.click();
 }
 
 void handleBullets() {
@@ -83,9 +99,32 @@ void inicio() {
   }
   handleBullets();
   distancia =millis()/80;
+
+  // Choque balas vs enemigo
+  /* int cantBalas = bullets.size();
+   for (int i = 0; i < cantBalas; i++) {
+   println("cantBalas = " + cantBalas);
+   Bullet laBala = bullets.get(i);
+   int cantEnem = enemy.size();
+   for (int j = 0; j < cantEnem; j++) {
+   println("cantEnem = " + cantEnem);
+   Sprite miEnemigo = enemy.get(i);
+   if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
+   
+   bullets.remove(i);
+   i--;
+   cantBalas = 0;
+   miEnemigo.reset();
+   }
+   }
+   }*/
+
   textSize(20);
   fill(255);
   text(distancia, 800, 20);
+  salir.end();
+  if (salir.click()==true)exit();
+  salir.click();
 }
 void startGame() {
   jugar= new Botones(400, 400, 113, 27);
@@ -94,8 +133,9 @@ void startGame() {
   salir= new Botones(810, 620, 82, 21);
   regresar=new Botones(720, 590, 179, 27);
   audon= new Botones(((width/2)-80), height/2, 182, 21);
+  creditos= new Botones(20, 615, 117, 15);
   gamer = new Player();
-  bullets = new ArrayList();
+  bullets = new ArrayList<Bullet>();
   enemy = new ArrayList<Sprite>();
   pos = 1;
   posEne = 50;
@@ -119,19 +159,18 @@ void setting() {
   image(fondo, posx, 0);
   salir.end();
   regresar.back();
-  
-  if(mousePressed){
-     if (mouseX >((width/2)-80) && mouseX<((width/2)-80)+182 && mouseY> height/2 && mouseY <height/2+21){
-        press=!press;
-     }
-   }
-  if (press==false){
+
+  if (mousePressed) {
+    if (mouseX >((width/2)-80) && mouseX<((width/2)-80)+182 && mouseY> height/2 && mouseY <height/2+21) {
+      press=!press;
+    }
+  }
+  if (press==false) {
     audon.sounds();
     afondo.pause();
   }
-  if (press==true){
+  if (press==true) {
     audon.sound();
-    afondo.play();
     afondo.loop();
   }
   if (salir.click()==true)exit();
@@ -142,4 +181,30 @@ void setting() {
 void rules() {
   background(#252850);
   image(regla, 0, 0);
+  salir.end();
+  regresar.back();
+  if (salir.click()==true)exit();
+  if (regresar.click()==true)menu=0;
+  salir.click();
+  regresar.click();
+}
+void creadores() {
+  image(fondo, posx, 0);
+  image(credito, 400, 20);
+  image(diseñoentorno, 300, 50);
+  image(apk, 290, 80);
+  image(Plataforma, 215, 110);
+  image(diseñopersonajes, 270, 140);
+  image(personajes, 235, 170);
+  image(audios, 400, 290);
+  image(musica, 110, 330);
+  image(diseñadores, 360, 370);
+  image(grupo, 330, 400);
+  image(programadores, 335, 470);
+  image(grupo, 330, 500);
+  salir.end();
+  regresar.back();
+  if (salir.click()==true)exit();
+  if (regresar.click()==true)menu=0;
+  regresar.click();
 }
