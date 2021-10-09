@@ -55,8 +55,4 @@ class Botones {
     }
     return press;
   }
-  void mousePressed(){
-    audon.sound();
-    afondo.loop();
-  }
 }

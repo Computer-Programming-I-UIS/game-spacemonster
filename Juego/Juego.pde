@@ -102,8 +102,6 @@ void inicio() {
 
   // Choque balas vs enemigo
   int cantBalas = bullets.size();
-  int indexBalaChoque = -1;
-  int indexEnemChoque = -1;
   for (int i = 0; i < cantBalas; i++) {
     println("cantBalas = " + cantBalas);
     Bullet laBala = bullets.get(i);
@@ -112,23 +110,19 @@ void inicio() {
       println("cantEnem = " + cantEnem);
       Sprite miEnemigo = enemy.get(j);
       if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
-        /*indexBalaChoque = i;
-        indexEnemChoque = j;
-        */
         bullets.remove(i);
-         i--;
-         cantBalas = 0;
-         miEnemigo.reset();
-         
+        i--;
+        cantBalas = 0;
+        miEnemigo.reset();
       }
     }
   }
-/*
+  /*
   if (indexBalaChoque != -1) bullets.remove(indexBalaChoque);
-  if (indexEnemChoque != -1) {
-    Sprite miEnemigo = enemy.get(indexEnemChoque);
-    miEnemigo.reset();
-  }*/
+   if (indexEnemChoque != -1) {
+   Sprite miEnemigo = enemy.get(indexEnemChoque);
+   miEnemigo.reset();
+   }*/
 
   textSize(20);
   fill(255);
@@ -170,20 +164,14 @@ void setting() {
   image(fondo, posx, 0);
   salir.end();
   regresar.back();
-
-  if (mousePressed) {
-    if (mouseX >((width/2)-80) && mouseX<((width/2)-80)+182 && mouseY> height/2 && mouseY <height/2+21) {
-      press=!press;
-    }
-  }
+  
   if (press==false) {
-    audon.sounds();
-    afondo.pause();
-  }
-  if (press==true) {
-    audon.sound();
-    afondo.loop();
-  }
+      audon.sounds();
+    }
+    if (press==true) {
+      audon.sound();
+    }
+
   if (salir.click()==true)exit();
   if (regresar.click()==true)menu=0;
   salir.click();
@@ -218,4 +206,23 @@ void creadores() {
   if (salir.click()==true)exit();
   if (regresar.click()==true)menu=0;
   regresar.click();
+}
+void mousePressed() {
+  switch(menu) {
+  case 2:
+    if (mousePressed) {
+      if (mouseX >((width/2)-80) && mouseX<((width/2)-80)+182 && mouseY> height/2 && mouseY <height/2+21) {
+        press=!press;
+      }
+    }
+    if (press==false) {
+      audon.sounds();
+      afondo.pause();
+    }
+    if (press==true) {
+      audon.sound();
+      afondo.loop();
+    }
+    break;
+  }
 }
