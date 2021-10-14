@@ -6,7 +6,7 @@ Botones jugar, salir, opciones, audon, regresar, reglas, creditos;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10;
 int distancia =0, max_distancia, menu=0;
-PImage fondo, plataforma, titulo, regla, credito;
+PImage fondo, plataforma, titulo, regla, credito,clasificación;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes;
 PImage enemigo;
 ArrayList<Sprite>enemy;
@@ -32,6 +32,7 @@ void setup() {
   diseñadores = loadImage("disenadores.png");
   grupo = loadImage("grupo.png");
   programadores = loadImage("programadores.png");
+  clasificación = loadImage("clasificacion.png");
   movimiento = false;
   startGame();
 }
@@ -39,6 +40,8 @@ void draw() {
   switch(menu) {
   case 0:
     image(fondo, posx, 0);
+    clasificación.resize(50,70);
+    image(clasificación,0,0);
     image(titulo, 220, 150);
     jugar.display();
     opciones.settings();
