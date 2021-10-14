@@ -16,7 +16,9 @@ Es un programa de un solo jugador de tipo aventura, el programa le permite al us
 
 # Requisitos
 
--Para poder escuchar la música de fondo hay el usuario debe tener instalada la libreria "minim" que perimite reproducir audios en processing. (Si el usuario no tiene esta libreria, puede facilmente descargarla en linea).
+-El usuario debe tener Processing para poder ejecutar el programa.
+
+-Para poder escuchar la música de fondo, el usuario debe tener instalada la libreria "Sound" que perimite reproducir audios en Processing. (Si el usuario no tiene esta libreria, puede facilmente descargarla en el Processing, se dirije a Sketch en la parte superior izquierda > importar libreria > añadir libreria > Busca la libreria "Sound" > Oprimir "Install").
 
 -El usuario tiene que tener cada imagen que se encuentre en la misma carpeta donde se encuentra el programa, así como la música que se pone de fondo.
 
