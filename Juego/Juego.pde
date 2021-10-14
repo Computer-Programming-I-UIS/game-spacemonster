@@ -1,12 +1,11 @@
-import ddf.minim.*;
-Minim minim;//Se declaran las clases Minim,Sprite, Player
-AudioPlayer afondo;
+import processing.sound.*; //Se importa la libreria Sound
+SoundFile afondo;
 Player gamer;
 Botones jugar, salir, opciones, audon, regresar, reglas, creditos;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10;
 int distancia =0, max_distancia, menu=0;
-PImage fondo, plataforma, titulo, regla, credito,clasificación;
+PImage fondo, plataforma, titulo, regla, credito, clasificación;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes;
 PImage enemigo;
 ArrayList<Sprite>enemy;
@@ -19,8 +18,7 @@ void setup() {
   plataforma = loadImage("plataforma.png");
   titulo = loadImage("titulo.png");
   regla = loadImage("reglas.jpg");
-  minim = new Minim(this);
-  afondo = minim.loadFile("fondo.mp3");
+  afondo = new SoundFile(this, "fondo.mp3");
   credito = loadImage("creditos.png");
   diseñoentorno = loadImage("disenoentorno.png");
   apk = loadImage("apk.png");
@@ -39,9 +37,10 @@ void setup() {
 void draw() {
   switch(menu) {
   case 0:
+    posx=0;
     image(fondo, posx, 0);
-    clasificación.resize(50,70);
-    image(clasificación,0,0);
+    clasificación.resize(50, 70);
+    image(clasificación, 0, 0);
     image(titulo, 220, 150);
     jugar.display();
     opciones.settings();
@@ -106,11 +105,9 @@ void inicio() {
   // Choque balas vs enemigo
   int cantBalas = bullets.size();
   for (int i = 0; i < cantBalas; i++) {
-    println("cantBalas = " + cantBalas);
     Bullet laBala = bullets.get(i);
     int cantEnem = enemy.size();
     for (int j = 0; j < cantEnem; j++) {
-      println("cantEnem = " + cantEnem);
       Sprite miEnemigo = enemy.get(j);
       if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
         bullets.remove(i);
@@ -120,19 +117,15 @@ void inicio() {
       }
     }
   }
-  /*
-  if (indexBalaChoque != -1) bullets.remove(indexBalaChoque);
-   if (indexEnemChoque != -1) {
-   Sprite miEnemigo = enemy.get(indexEnemChoque);
-   miEnemigo.reset();
-   }*/
-
   textSize(20);
   fill(255);
   text(distancia, 800, 20);
   salir.end();
+  regresar.back();
   if (salir.click()==true)exit();
+  if (regresar.click()==true)menu=0;
   salir.click();
+  regresar.click();
 }
 void startGame() {
   jugar= new Botones(400, 400, 113, 27);
@@ -167,13 +160,13 @@ void setting() {
   image(fondo, posx, 0);
   salir.end();
   regresar.back();
-  
+
   if (press==false) {
-      audon.sounds();
-    }
-    if (press==true) {
-      audon.sound();
-    }
+    audon.sounds();
+  }
+  if (press==true) {
+    audon.sound();
+  }
 
   if (salir.click()==true)exit();
   if (regresar.click()==true)menu=0;
@@ -220,12 +213,16 @@ void mousePressed() {
     }
     if (press==false) {
       audon.sounds();
-      afondo.pause();
+      if ( afondo.isPlaying() )afondo.pause();
     }
+
     if (press==true) {
       audon.sound();
-      afondo.loop();
+      if ( afondo.isPlaying() == false ) {
+        afondo.play();
+        afondo.loop();
+      }
     }
     break;
-  }
+  } 
 }
