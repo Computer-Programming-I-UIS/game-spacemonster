@@ -117,6 +117,18 @@ void inicio() {
       }
     }
   }
+  /*    int cantPlayer = gamer.size();
+   for (int i = 0; i < cantPlayer; i++) {
+   Player elgamer = gamer.get(i);
+   int cantEnem = enemy.size();
+   for (int j = 0; j < cantEnem; j++) {
+   Sprite miEnemigo = enemy.get(j);
+   if (miEnemigo.center.x < elgamer.x+30  && elgamer.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > elgamer.y ) {
+   gamer.remove(i);
+   miEnemigo.reset();
+   }
+   }
+   }*/
   textSize(20);
   fill(255);
   text(distancia, 800, 20);
@@ -224,5 +236,5 @@ void mousePressed() {
       }
     }
     break;
-  } 
+  }
 }
