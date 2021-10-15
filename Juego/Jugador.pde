@@ -3,8 +3,9 @@ class Player {
   int pos;
   int tls;
   int coolDown;
-  boolean salto;
+  boolean salto, mostrar = true;;
   PImage[] img;
+  int vida;
   public  Player() {
     this.x = width/2;
     this.y = height-50;
@@ -32,7 +33,7 @@ class Player {
     img[12] = loadImage("Salto(4).png");
   }
   void display() {
-    image(img[pos], x, y, 150, 130);
+    if(mostrar)image(img[pos], x, y, 150, 130);
     if (y+33<350)
       y+= gr;
     else

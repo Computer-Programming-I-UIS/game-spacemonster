@@ -18,7 +18,7 @@ class Sprite {
   void mover()
   {
     center.x += cambio.x;
-    center.y = random(0,400);
+    //center.y += -4;
     if (center.x < 0) {
       reset();
     }

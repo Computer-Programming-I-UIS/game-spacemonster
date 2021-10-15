@@ -47,7 +47,10 @@ void draw() {
     salir.end();
     reglas.rules();
     creditos.make();
-    if (jugar.click()==true)menu=1;
+    if (jugar.click()==true){
+      menu=1;
+      gamer.vida = 4;
+    }
     if (opciones.click()==true)menu=2;
     if (reglas.click()==true)menu=3;
     if (creditos.click()==true)menu=4;
@@ -117,18 +120,23 @@ void inicio() {
       }
     }
   }
-  /*    int cantPlayer = gamer.size();
-   for (int i = 0; i < cantPlayer; i++) {
-   Player elgamer = gamer.get(i);
-   int cantEnem = enemy.size();
-   for (int j = 0; j < cantEnem; j++) {
-   Sprite miEnemigo = enemy.get(j);
-   if (miEnemigo.center.x < elgamer.x+30  && elgamer.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > elgamer.y ) {
-   gamer.remove(i);
-   miEnemigo.reset();
-   }
-   }
-   }*/
+
+
+
+
+  int cantEnem = enemy.size();
+  for (int w = 0; w < cantEnem; w++) {
+    Sprite miEnemigo = enemy.get(w);
+    if ( (miEnemigo.center.x < gamer.x+30 + 90)  && ( (miEnemigo.center.y+75 < gamer.y+5+120 && miEnemigo.center.y+75 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
+      gamer.vida -= 1;
+      miEnemigo.reset();
+    }
+  }
+  
+  if(gamer.vida==0){
+    exit();
+  }
+
   textSize(20);
   fill(255);
   text(distancia, 800, 20);
