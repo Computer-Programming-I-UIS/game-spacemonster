@@ -4,9 +4,9 @@ Player gamer;
 Botones jugar, salir, opciones, audon, regresar, reglas, creditos;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10;
-int distancia =0, max_distancia, menu=0;
+int distancia =0, max_distancia = 0, menu=0;
 PImage fondo, plataforma, titulo, regla, credito, clasificación;
-PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes;
+PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje;
 PImage enemigo;
 ArrayList<Sprite>enemy;
 boolean movimiento, press;
@@ -32,6 +32,7 @@ void setup() {
   grupo = loadImage("grupo.png");
   programadores = loadImage("programadores.png");
   clasificación = loadImage("clasificacion.png");
+  puntaje = loadImage("puntaje.png");
   movimiento = false;
   startGame();
 }
@@ -43,12 +44,13 @@ void draw() {
     clasificación.resize(50, 70);
     image(clasificación, 0, 0);
     image(titulo, 220, 150);
+
     jugar.display();
     opciones.settings();
     salir.end();
     reglas.rules();
     creditos.make();
-    if (jugar.click()==true){
+    if (jugar.click()==true) {
       menu=1;
       gamer.vida = 4;
       referenciaInicio= millis()/80;
@@ -105,8 +107,8 @@ void inicio() {
       movimiento =false;
   }
   handleBullets();
-  distancia =int( ( millis()/80 ) - referenciaInicio ) ;
-  
+  distancia =int( ( millis()/80 ) - referenciaInicio );
+
 
   // Choque balas vs enemigo
   int cantBalas = bullets.size();
@@ -135,14 +137,17 @@ void inicio() {
       miEnemigo.reset();
     }
   }
-  
-  if(gamer.vida==0){
-    exit();
-  }
 
-  textSize(20);
+  if (gamer.vida==0) {
+    exit();
+    /*if (distancia > max_distancia)
+      max_distancia = distancia;*/
+  }
+  image(puntaje, 700, 10);
+  textSize(40);
   fill(255);
-  text(distancia, 800, 20);
+  text(distancia, 730, 55);
+  text(gamer.vida, 30, 30);
   salir.end();
   regresar.back();
   if (salir.click()==true)exit();

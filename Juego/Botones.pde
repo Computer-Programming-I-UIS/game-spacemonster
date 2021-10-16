@@ -46,6 +46,11 @@ class Botones {
     creditos = loadImage("creditos.png");
     image(creditos, this.x, this.y);
   }
+  void pause(){
+    PImage pausa;
+    pausa = loadImage("pausa.png");
+    image(pausa, this.x, this.y);
+  }
   boolean click() {
     boolean press = false;
     if (mousePressed) {

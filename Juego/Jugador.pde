@@ -38,7 +38,7 @@ class Player {
     y += vel;
     if (y+33<350) {
       vel += gr;
-    } else {
+    } else if(salto) {
       salto = false;
       vel = 0;
       pos = 0;
