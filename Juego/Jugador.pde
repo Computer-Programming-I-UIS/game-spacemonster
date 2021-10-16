@@ -60,7 +60,9 @@ class Player {
       {
         y-=300;
         salto = true;
-        pos = 0;
+           pos++;
+        if (pos > 12)
+          pos =0;
       }
     }
   }

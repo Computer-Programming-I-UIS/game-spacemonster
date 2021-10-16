@@ -18,14 +18,15 @@ class Sprite {
   void mover()
   {
     center.x += cambio.x;
-    //center.y += -4;
+    if(center.y > 0 && center.y < 400)
+    center.y += 1;
     if (center.x < 0) {
       reset();
     }
   }
   void reset() {
     center.x = width;
-    center.y = random(200, 400);
+    center.y = random(100, 300);
   }
   boolean izquierda()
   {
