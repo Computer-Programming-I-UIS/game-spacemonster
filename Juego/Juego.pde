@@ -10,6 +10,7 @@ PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, prog
 PImage enemigo;
 ArrayList<Sprite>enemy;
 boolean movimiento, press;
+float referenciaInicio = 0;
 
 void setup() {
   frameRate(35);
@@ -50,6 +51,7 @@ void draw() {
     if (jugar.click()==true){
       menu=1;
       gamer.vida = 4;
+      referenciaInicio= millis()/80;
     }
     if (opciones.click()==true)menu=2;
     if (reglas.click()==true)menu=3;
@@ -103,7 +105,8 @@ void inicio() {
       movimiento =false;
   }
   handleBullets();
-  distancia =millis()/80;
+  distancia =int( ( millis()/80 ) - referenciaInicio ) ;
+  
 
   // Choque balas vs enemigo
   int cantBalas = bullets.size();

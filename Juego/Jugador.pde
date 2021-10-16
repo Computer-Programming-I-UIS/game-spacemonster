@@ -3,7 +3,8 @@ class Player {
   int pos;
   int tls;
   int coolDown;
-  boolean salto, mostrar = true;;
+  boolean salto, mostrar = true;
+  ;
   PImage[] img;
   int vida;
   public  Player() {
@@ -13,7 +14,7 @@ class Player {
     this.coolDown = 300;
     x= 50;
     y= 345;
-    gr= 9;
+    gr= 0.2;
     vel= 5;
     pos= 0;
     salto = true;
@@ -33,11 +34,15 @@ class Player {
     img[12] = loadImage("Salto(4).png");
   }
   void display() {
-    if(mostrar)image(img[pos], x, y, 150, 130);
-    if (y+33<350)
-      y+= gr;
-    else
+    if (mostrar)image(img[pos], x, y, 150, 130);
+    y += vel;
+    if (y+33<350) {
+      vel += gr;
+    } else {
       salto = false;
+      vel = 0;
+      pos = 0;
+    }
     if (keyPressed && key == CODED)
     {
       switch(keyCode) {
@@ -58,12 +63,15 @@ class Player {
       }
       if ( keyCode == UP && !salto )
       {
-        y-=300;
+        vel=-6;
         salto = true;
-           pos++;
-        if (pos > 12)
-          pos =0;
       }
+    }
+
+    if (salto) {
+      pos++;
+      if (pos > 12)
+        pos = 0;
     }
   }
   void shoot() {

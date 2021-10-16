@@ -26,7 +26,7 @@ class Sprite {
   }
   void reset() {
     center.x = width;
-    center.y = random(100, 300);
+    center.y = random(0, 400);
   }
   boolean izquierda()
   {
