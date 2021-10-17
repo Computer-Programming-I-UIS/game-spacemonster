@@ -36,7 +36,7 @@ class Player {
   void display() {
     if (mostrar)image(img[pos], x, y, 150, 130);
     y += vel;
-    if (y+33<350) {
+    if (y+33<380) {
       vel += gr;
     } else if(salto) {
       salto = false;

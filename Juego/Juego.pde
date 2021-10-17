@@ -1,11 +1,11 @@
 import processing.sound.*; //Se importa la libreria Sound
 SoundFile afondo;
 Player gamer;
-Botones jugar, salir, opciones, audon, regresar, reglas, creditos;
+Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10;
 int distancia =0, max_distancia = 0, menu=0;
-PImage fondo, plataforma, titulo, regla, credito, clasificación;
+PImage fondo, plataforma, titulo, regla, credito, clasificación, continua;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje;
 PImage enemigo;
 ArrayList<Sprite>enemy;
@@ -33,6 +33,7 @@ void setup() {
   programadores = loadImage("programadores.png");
   clasificación = loadImage("clasificacion.png");
   puntaje = loadImage("puntaje.png");
+  continua = loadImage("continue.jpg");
   movimiento = false;
   startGame();
 }
@@ -72,9 +73,12 @@ void draw() {
   case 4:
     creadores();
     break;
-    case 5:
+  case 5:
     pausa();
     break;
+  /*case 6:
+  
+    break;*/
   }
   jugar.click();
   opciones.click();
@@ -114,6 +118,7 @@ void inicio() {
 
 
   // Choque balas vs enemigo
+  int indiceEnemigoReset = -1, indiceBalaEliminar = -1;
   int cantBalas = bullets.size();
   for (int i = 0; i < cantBalas; i++) {
     Bullet laBala = bullets.get(i);
@@ -121,13 +126,20 @@ void inicio() {
     for (int j = 0; j < cantEnem; j++) {
       Sprite miEnemigo = enemy.get(j);
       if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
-        bullets.remove(i);
-        i--;
-        cantBalas = 0;
-        miEnemigo.reset();
+
+        indiceBalaEliminar = i;
+
+        indiceEnemigoReset = j;
       }
     }
   }
+
+  if ( indiceEnemigoReset != -1 && indiceBalaEliminar != -1) {
+    bullets.remove(indiceBalaEliminar);
+    Sprite miEnemigo = enemy.get(indiceEnemigoReset);
+    miEnemigo.reset();
+  }
+
 
 
 
@@ -144,7 +156,7 @@ void inicio() {
   if (gamer.vida==0) {
     exit();
     /*if (distancia > max_distancia)
-      max_distancia = distancia;*/
+     max_distancia = distancia;*/
   }
   image(puntaje, 700, 10);
   textSize(40);
@@ -152,11 +164,11 @@ void inicio() {
   text(distancia, 730, 55);
   text(gamer.vida, 30, 30);
   salir.end();
-  regresar.back();
+  pausa.intermedio();
   if (salir.click()==true)exit();
-  if (regresar.click()==true)menu=0;
+  if (pausa.click()==true)menu=5;
   salir.click();
-  regresar.click();
+  pausa.click();
 }
 void startGame() {
   jugar= new Botones(400, 400, 113, 27);
@@ -164,6 +176,8 @@ void startGame() {
   reglas= new Botones(315, 477, 279, 21);
   salir= new Botones(810, 620, 82, 21);
   regresar=new Botones(720, 590, 179, 27);
+  pausa=new Botones(580, 90, 119, 21);
+  continuar = new Botones(300,200,411,27);
   audon= new Botones(((width/2)-80), height/2, 182, 21);
   creditos= new Botones(20, 615, 117, 15);
   gamer = new Player();
@@ -257,12 +271,16 @@ void mousePressed() {
     break;
   }
 }
-void pausa(){
-  background(0);
+void pausa() {
+  continua.resize(900,650);
+  image(continua,0,0);
+  continuar.seguir();
   salir.end();
   regresar.back();
   if (salir.click()==true)exit();
   if (regresar.click()==true)menu=0;
+  if (continuar.click()==true)menu=1;
+  continuar.click();
   salir.click();
   regresar.click();
 }
