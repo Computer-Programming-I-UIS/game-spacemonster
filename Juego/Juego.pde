@@ -72,6 +72,9 @@ void draw() {
   case 4:
     creadores();
     break;
+    case 5:
+    pausa();
+    break;
   }
   jugar.click();
   opciones.click();
@@ -253,4 +256,13 @@ void mousePressed() {
     }
     break;
   }
+}
+void pausa(){
+  background(0);
+  salir.end();
+  regresar.back();
+  if (salir.click()==true)exit();
+  if (regresar.click()==true)menu=0;
+  salir.click();
+  regresar.click();
 }
