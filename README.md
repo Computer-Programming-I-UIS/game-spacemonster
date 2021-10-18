@@ -22,6 +22,13 @@ Es un programa de un solo jugador de tipo aventura, el programa le permite al us
 
 -El usuario tiene que tener cada imagen que se encuentre en la misma carpeta donde se encuentra el programa, así como la música que se pone de fondo.
 
+
+## Banner
+
+![fondo (2)](https://user-images.githubusercontent.com/89647221/137793694-4e84257f-f77c-4b1e-837d-2b55a7f21bcc.png)
+ 
+ En el banner podremos evidenciar la portada o imagen del juego en el que se representa su publico y se aprecia las caracteristicas principales del entorno.
+
 ## Menú
 
 ![Inicio](inicio.jpg)
