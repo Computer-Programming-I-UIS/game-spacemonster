@@ -3,13 +3,13 @@ SoundFile afondo;
 Player gamer;
 Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
-int posx=0, pos, posEne, speed = 10;
+int posx=0, pos, posEne, speed = 10, posObj;
 int distancia =0, max_distancia = 0, menu=0;
 PImage fondo, plataforma, titulo, regla, credito, clasificación, continua;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje;
-PImage enemigo;
 ArrayList<Sprite>enemy;
-boolean movimiento, press;
+ArrayList<Rite>object;
+boolean press;
 float referenciaInicio = 0;
 
 void setup() {
@@ -34,7 +34,6 @@ void setup() {
   clasificación = loadImage("clasificacion.png");
   puntaje = loadImage("puntaje.png");
   continua = loadImage("continue.jpg");
-  movimiento = false;
   startGame();
 }
 void draw() {
@@ -76,9 +75,9 @@ void draw() {
   case 5:
     pausa();
     break;
-  /*case 6:
-  
-    break;*/
+    /*case 6:
+     
+     break;*/
   }
   jugar.click();
   opciones.click();
@@ -108,10 +107,11 @@ void inicio() {
   {
     enemy.get(i).mostrar();
     enemy.get(i).mover();
-    if (enemy.get(0).izquierda())
-      movimiento =true;
-    else
-      movimiento =false;
+  }
+  for (int i= 0; i <object.size(); i++)
+  {
+    object.get(i).mostrar();
+    object.get(i).mover();
   }
   handleBullets();
   distancia =int( ( millis()/80 ) - referenciaInicio );
@@ -139,20 +139,45 @@ void inicio() {
     Sprite miEnemigo = enemy.get(indiceEnemigoReset);
     miEnemigo.reset();
   }
+//Choques balas vs objetos
+  int indiceobjectReset = -1, indiceBallaEliminar = -1;
+  int cantBallas = bullets.size();
+  for (int i = 0; i < cantBallas; i++) {
+    Bullet laBala = bullets.get(i);
+    int cantobj = object.size();
+    for (int j = 0; j < cantobj; j++) {
+      Rite miobject = object.get(j);
+      if (miobject.center.x < laBala.x+30  && laBala.y+30 > miobject.center.y && miobject.center.y+75 > laBala.y ) {
 
+        indiceBallaEliminar = i;
 
+        indiceobjectReset = j;
+      }
+    }
+  }
 
-
-
+  if ( indiceobjectReset != -1 && indiceBallaEliminar != -1) {
+    bullets.remove(indiceBallaEliminar);
+    Rite miobject = object.get(indiceobjectReset);
+    miobject.reset();
+  }
+//Choques entre objetos
   int cantEnem = enemy.size();
   for (int w = 0; w < cantEnem; w++) {
     Sprite miEnemigo = enemy.get(w);
-    if ( (miEnemigo.center.x < gamer.x+30 + 90)  && ( (miEnemigo.center.y+75 < gamer.y+5+120 && miEnemigo.center.y+75 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
+    if ( (miEnemigo.center.x < gamer.x+30 + 80)  && ( (miEnemigo.center.y+55 < gamer.y+5+120 && miEnemigo.center.y+75 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
       gamer.vida -= 1;
       miEnemigo.reset();
     }
   }
-
+  int cantobj = enemy.size();
+  for (int v = 0; v < cantobj; v++) {
+    Rite miobject = object.get(v);
+    if ( (miobject.center.x < gamer.x+30 + 80)  && ( (miobject.center.y+55 < gamer.y+5+120 && miobject.center.y+75 > gamer.y ) || (miobject.center.y < gamer.y+5+120 && miobject.center.y > gamer.y ) )  ) {
+      gamer.vida -= 1;
+      miobject.reset();
+    }
+  }
   if (gamer.vida==0) {
     exit();
     /*if (distancia > max_distancia)
@@ -177,14 +202,13 @@ void startGame() {
   salir= new Botones(810, 620, 82, 21);
   regresar=new Botones(720, 590, 179, 27);
   pausa=new Botones(580, 90, 119, 21);
-  continuar = new Botones(300,200,411,27);
+  continuar = new Botones(300, 200, 411, 27);
   audon= new Botones(((width/2)-80), height/2, 182, 21);
   creditos= new Botones(20, 615, 117, 15);
   gamer = new Player();
   bullets = new ArrayList<Bullet>();
   enemy = new ArrayList<Sprite>();
   pos = 1;
-  posEne = 50;
   PImage img =loadImage("oponente"+(pos)+".png");
   enemy.add(new Sprite(img, width, (int)random(200, 400), pos));
   pos++;
@@ -197,6 +221,23 @@ void startGame() {
       pos =1;
   }
   for (Sprite s : enemy)
+  {
+    s.cambio.x = -10;
+  }
+  object = new ArrayList<Rite>();
+  pos = 1;
+  PImage image =loadImage("object"+(pos)+".png");
+  object.add(new Rite(image, (int)random(0, 400), width, pos));
+  pos++;
+  for (int i = 0; i < 1; i++)
+  {
+    image =loadImage("object"+(pos)+".png");
+    object.add(new Rite(image, (int)random(0, 400), width, pos));
+    pos++;
+    if (pos == 2)
+      pos =1;
+  }
+  for (Rite s : object)
   {
     s.cambio.x = -10;
   }
@@ -272,8 +313,8 @@ void mousePressed() {
   }
 }
 void pausa() {
-  continua.resize(900,650);
-  image(continua,0,0);
+  continua.resize(900, 650);
+  image(continua, 0, 0);
   continuar.seguir();
   salir.end();
   regresar.back();

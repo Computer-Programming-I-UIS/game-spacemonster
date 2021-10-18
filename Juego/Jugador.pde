@@ -15,7 +15,7 @@ class Player {
     x= 50;
     y= 345;
     gr= 0.2;
-    vel= 5;
+    vel= 7;
     pos= 0;
     salto = true;
     img = new PImage[15];
@@ -63,7 +63,7 @@ class Player {
       }
       if ( keyCode == UP && !salto )
       {
-        vel=-6;
+        vel=-8;
         salto = true;
       }
     }
