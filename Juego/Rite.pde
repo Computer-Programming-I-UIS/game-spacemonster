@@ -26,6 +26,6 @@ class Rite {
   }
   void reset() {
     center.x = width;
-    center.y = random(0);
+    center.y = random(0,50);
   }
 }

@@ -4,7 +4,7 @@ Player gamer;
 Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
-int distancia =0, max_distancia, menu=0,carga;
+int distancia =0, max_distancia, menu=0, carga;
 PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje, muerto;
 ArrayList<Sprite>enemy;
@@ -151,7 +151,7 @@ void inicio() {
     int cantobj = object.size();
     for (int j = 0; j < cantobj; j++) {
       Rite miobject = object.get(j);
-      if (miobject.center.x < laBala.x+30  && laBala.y+30 > miobject.center.y && miobject.center.y+75 > laBala.y ) {
+      if (miobject.center.x < laBala.x+150  && laBala.y+70 > miobject.center.y && miobject.center.y+75 > laBala.y ) {
 
         indiceBallaEliminar = i;
 
@@ -169,15 +169,16 @@ void inicio() {
   int cantEnem = enemy.size();
   for (int w = 0; w < cantEnem; w++) {
     Sprite miEnemigo = enemy.get(w);
-    if ( (miEnemigo.center.x < gamer.x+30 + 80)  && ( (miEnemigo.center.y+55 < gamer.y+5+120 && miEnemigo.center.y+75 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
+    if ( (miEnemigo.center.x < gamer.x+30 + 80)  && ( (miEnemigo.center.y+50 < gamer.y+5+120 && miEnemigo.center.y+75 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
       gamer.vida -= 1;
       miEnemigo.reset();
     }
   }
+  //Choque entre enemigos
   int cantobj = enemy.size();
   for (int v = 0; v < cantobj; v++) {
     Rite miobject = object.get(v);
-    if ( (miobject.center.x < gamer.x+30 + 80)  && ( (miobject.center.y+55 < gamer.y+5+120 && miobject.center.y+75 > gamer.y ) || (miobject.center.y < gamer.y+5+120 && miobject.center.y > gamer.y ) )  ) {
+    if ( (miobject.center.x < gamer.x+30 + 80)  && ( (miobject.center.y+50 < gamer.y+5+120 && miobject.center.y+75 > gamer.y ) || (miobject.center.y < gamer.y+5+120 && miobject.center.y > gamer.y ) )  ) {
       gamer.vida -= 1;
       miobject.reset();
     }
@@ -192,9 +193,9 @@ void inicio() {
   fill(255);
   text(distancia, 730, 55);
   fill(0);
-  rect(60, 40,200,30);
+  rect(60, 40, 200, 30);
   fill(#2ECC71);
-  rect(60, 40,carga,30);
+  rect(60, 40, carga, 30);
   //text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
@@ -325,7 +326,7 @@ void pausa() {
   continua.resize(900, 650);
   image(continua, 0, 0);
   agotado.resize(200, 184);
-  image (agotado, 400,250);
+  image (agotado, 400, 250);
   continuar.seguir();
   salir.end();
   regresar.back();
