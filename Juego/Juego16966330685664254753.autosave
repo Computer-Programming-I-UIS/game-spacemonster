@@ -4,14 +4,13 @@ Player gamer;
 Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
-int distancia =0, max_distancia, menu=0;
+int distancia =0, max_distancia = 0, menu=0;
 PImage fondo, plataforma, titulo, regla, credito, clasificación, continua;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje;
 ArrayList<Sprite>enemy;
 ArrayList<Rite>object;
 boolean press;
 float referenciaInicio = 0;
-PFont arcade;
 
 void setup() {
   frameRate(35);
@@ -76,9 +75,9 @@ void draw() {
   case 5:
     pausa();
     break;
-  case 6:
-    replay();
-    break;
+    /*case 6:
+     
+     break;*/
   }
   jugar.click();
   opciones.click();
@@ -109,12 +108,12 @@ void inicio() {
     enemy.get(i).mostrar();
     enemy.get(i).mover();
   }
-  if(distancia >= 100)
-  for (int i= 0; i <object.size(); i++)
-  {
-    object.get(i).mostrar();
-    object.get(i).mover();
-  }
+  if ( distancia >= 60)
+    for (int i= 0; i <object.size(); i++)
+    {
+      object.get(i).mostrar();
+      object.get(i).mover();
+    }
   handleBullets();
   distancia =int( ( millis()/80 ) - referenciaInicio );
 
@@ -127,7 +126,7 @@ void inicio() {
     int cantEnem = enemy.size();
     for (int j = 0; j < cantEnem; j++) {
       Sprite miEnemigo = enemy.get(j);
-      if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
+      if (miEnemigo.center.x < laBala.x+40  && laBala.y+40 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
 
         indiceBalaEliminar = i;
 
@@ -149,7 +148,7 @@ void inicio() {
     int cantobj = object.size();
     for (int j = 0; j < cantobj; j++) {
       Rite miobject = object.get(j);
-      if (miobject.center.x < laBala.x+30  && laBala.y+30 > miobject.center.y && miobject.center.y+75 > laBala.y ) {
+      if (miobject.center.x < laBala.x+40  && laBala.y+40 > miobject.center.y && miobject.center.y+75 > laBala.y ) {
 
         indiceBallaEliminar = i;
 
@@ -181,16 +180,15 @@ void inicio() {
     }
   }
   if (gamer.vida==0) {
-    menu=6;
+    exit();
+    /*if (distancia > max_distancia)
+     max_distancia = distancia;*/
   }
   image(puntaje, 700, 10);
-  arcade = createFont("ARCADE.TTF", 128);
-  textFont(arcade);
   textSize(40);
   fill(255);
   text(distancia, 730, 55);
-
-  //text(gamer.vida, 30, 30);
+  text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
   if (salir.click()==true)exit();
@@ -205,7 +203,7 @@ void startGame() {
   salir= new Botones(810, 620, 82, 21);
   regresar=new Botones(720, 590, 179, 27);
   pausa=new Botones(580, 90, 119, 21);
-  continuar = new Botones(280, 200, 411, 27);
+  continuar = new Botones(300, 200, 411, 27);
   audon= new Botones(((width/2)-80), height/2, 182, 21);
   creditos= new Botones(20, 615, 117, 15);
   gamer = new Player();
@@ -325,19 +323,6 @@ void pausa() {
   if (regresar.click()==true)menu=0;
   if (continuar.click()==true)menu=1;
   continuar.click();
-  salir.click();
-  regresar.click();
-}
-void replay() {
-  image (fondo, 0, 0);
-  if (distancia > max_distancia)max_distancia = distancia;
-  text(distancia, 400, 400);
-  text(max_distancia, 400, 500);
-  gamer.x=50;
-  salir.end();
-  regresar.back();
-  if (salir.click()==true)exit();
-  if (regresar.click()==true)menu=0;
   salir.click();
   regresar.click();
 }
