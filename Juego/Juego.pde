@@ -5,7 +5,7 @@ Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, contin
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
 int distancia =0, max_distancia, menu=0;
-PImage fondo, plataforma, titulo, regla, credito, clasificación, continua;
+PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje;
 ArrayList<Sprite>enemy;
 ArrayList<Rite>object;
@@ -35,6 +35,7 @@ void setup() {
   clasificación = loadImage("clasificacion.png");
   puntaje = loadImage("puntaje.png");
   continua = loadImage("continue.jpg");
+  rayo = loadImage("rayo.png");
   startGame();
 }
 void draw() {
@@ -45,7 +46,6 @@ void draw() {
     clasificación.resize(50, 70);
     image(clasificación, 0, 0);
     image(titulo, 220, 150);
-
     jugar.display();
     opciones.settings();
     salir.end();
@@ -53,7 +53,7 @@ void draw() {
     creditos.make();
     if (jugar.click()==true) {
       menu=1;
-      gamer.vida = 4;
+      reiniciarJuego();
       referenciaInicio= millis()/80;
     }
     if (opciones.click()==true)menu=2;
@@ -109,12 +109,12 @@ void inicio() {
     enemy.get(i).mostrar();
     enemy.get(i).mover();
   }
-  if(distancia >= 100)
-  for (int i= 0; i <object.size(); i++)
-  {
-    object.get(i).mostrar();
-    object.get(i).mover();
-  }
+  if (distancia >= 100)
+    for (int i= 0; i <object.size(); i++)
+    {
+      object.get(i).mostrar();
+      object.get(i).mover();
+    }
   handleBullets();
   distancia =int( ( millis()/80 ) - referenciaInicio );
 
@@ -189,8 +189,7 @@ void inicio() {
   textSize(40);
   fill(255);
   text(distancia, 730, 55);
-
-  //text(gamer.vida, 30, 30);
+  text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
   if (salir.click()==true)exit();
@@ -340,4 +339,26 @@ void replay() {
   if (regresar.click()==true)menu=0;
   salir.click();
   regresar.click();
+}
+
+void reiniciarJuego() {
+
+  // Reiniciar Jugador
+  gamer.vida = 4;
+  gamer.x = 50;
+  gamer.y = 400;
+  gamer.pos = 0;
+
+  // Reiniciar enemigos
+  for (Sprite ene : enemy) {
+    ene.reset();
+  }
+
+
+  // Reiniciar rocas
+  for (Rite rock : object) {
+    rock.reset();
+  }
+  // Reiniciar balas
+  bullets.clear();
 }
