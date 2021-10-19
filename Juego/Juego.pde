@@ -4,7 +4,7 @@ Player gamer;
 Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
-int distancia =0, max_distancia, menu=0;
+int distancia =0, max_distancia, menu=0,carga;
 PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje, muerto;
 ArrayList<Sprite>enemy;
@@ -191,13 +191,18 @@ void inicio() {
   textSize(40);
   fill(255);
   text(distancia, 730, 55);
-  text(gamer.vida, 30, 30);
+  fill(0);
+  rect(60, 40,200,30);
+  fill(#2ECC71);
+  rect(60, 40,carga,30);
+  //text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
   if (salir.click()==true)exit();
   if (pausa.click()==true)menu=5;
   salir.click();
   pausa.click();
+  gamer.live();
 }
 void startGame() {
   jugar= new Botones(400, 400, 113, 27);
@@ -335,6 +340,7 @@ void replay() {
   muerto.resize(200, 184);
   image (fondo, 0, 0);
   image(muerto, 350, 160);
+  fill(255);
   if (distancia > max_distancia)max_distancia = distancia;
   textSize(65);
   text("Game Over", 300, 100);

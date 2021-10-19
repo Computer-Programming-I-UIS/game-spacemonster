@@ -81,6 +81,9 @@ class Player {
       tls = millis();
     }
   }
+  void live(){
+    carga = int(map(gamer.vida, 0, 4, 0, 200));
+  }
 }
 void keyPressed() {
   if (key == 'x')
