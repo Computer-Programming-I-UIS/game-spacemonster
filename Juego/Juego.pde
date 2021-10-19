@@ -39,6 +39,7 @@ void setup() {
   rayo = loadImage("rayo.png");
   muerto = loadImage("Dead/Dead (8).png");
   agotado = loadImage("Dead/Dead (1).png");
+  arcade = createFont("ARCADE.TTF", 128);
   startGame();
 }
 void draw() {
@@ -188,7 +189,7 @@ void inicio() {
     menu=6;
   }
   image(puntaje, 700, 10);
-  arcade = createFont("ARCADE.TTF", 128);
+  
   textFont(arcade);
   textSize(40);
   fill(255);
@@ -296,11 +297,18 @@ void creadores() {
   image(grupo, 330, 400);
   image(programadores, 335, 470);
   image(grupo, 330, 500);
+  fill(#EC9706);
+  textFont(arcade);
+  textSize(40);
+  text("Agradecimientos",330,600);
+  fill(#9074E2);
+  text("Alex Mantilla",350,630);
   salir.end();
   regresar.back();
   if (salir.click()==true)exit();
   if (regresar.click()==true)menu=0;
   regresar.click();
+  salir.click();
 }
 void mousePressed() {
   switch(menu) {
