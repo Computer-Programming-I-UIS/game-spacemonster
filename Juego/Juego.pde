@@ -215,7 +215,7 @@ void startGame() {
   reglas= new Botones(315, 477, 279, 21);
   salir= new Botones(810, 620, 82, 21);
   regresar=new Botones(720, 590, 179, 27);
-  pausa=new Botones(580, 90, 119, 21);
+  pausa=new Botones(625, 6, 70, 70);
   continuar = new Botones(280, 200, 411, 27);
   audon= new Botones(((width/2)-80), height/2, 182, 21);
   creditos= new Botones(20, 615, 117, 15);

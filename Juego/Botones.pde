@@ -49,6 +49,7 @@ class Botones {
   void intermedio(){
     PImage pausa;
     pausa = loadImage("pausa.png");
+    pausa.resize(70,70);
     image(pausa, this.x, this.y);
   }
   void seguir(){
