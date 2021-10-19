@@ -169,16 +169,16 @@ void inicio() {
   int cantEnem = enemy.size();
   for (int w = 0; w < cantEnem; w++) {
     Sprite miEnemigo = enemy.get(w);
-    if ( (miEnemigo.center.x < gamer.x+30 + 80)  && ( (miEnemigo.center.y+50 < gamer.y+5+120 && miEnemigo.center.y+75 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
+    if ( (miEnemigo.center.x < gamer.x+30 + 80)  && ( (miEnemigo.center.y+80 < gamer.y+5+120 && miEnemigo.center.y+65 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
       gamer.vida -= 1;
       miEnemigo.reset();
     }
   }
   //Choque entre enemigos
-  int cantobj = enemy.size();
+  int cantobj = object.size();
   for (int v = 0; v < cantobj; v++) {
     Rite miobject = object.get(v);
-    if ( (miobject.center.x < gamer.x+30 + 80)  && ( (miobject.center.y+50 < gamer.y+5+120 && miobject.center.y+75 > gamer.y ) || (miobject.center.y < gamer.y+5+120 && miobject.center.y > gamer.y ) )  ) {
+    if ( (miobject.center.x < gamer.x+30 + 160)  && ( (miobject.center.y+40 < gamer.y+5+120 && miobject.center.y+65  > gamer.y ) || (miobject.center.y < gamer.y+5+120 && miobject.center.y > gamer.y ) )  ) {
       gamer.vida -= 1;
       miobject.reset();
     }
