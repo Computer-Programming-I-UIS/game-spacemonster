@@ -5,8 +5,8 @@ Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, contin
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
 int distancia =0, max_distancia, menu=0;
-PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo;
-PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje;
+PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado;
+PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje, muerto;
 ArrayList<Sprite>enemy;
 ArrayList<Rite>object;
 boolean press;
@@ -36,6 +36,8 @@ void setup() {
   puntaje = loadImage("puntaje.png");
   continua = loadImage("continue.jpg");
   rayo = loadImage("rayo.png");
+  muerto = loadImage("Dead/Dead (8).png");
+  agotado = loadImage("Dead/Dead (1).png");
   startGame();
 }
 void draw() {
@@ -317,6 +319,8 @@ void mousePressed() {
 void pausa() {
   continua.resize(900, 650);
   image(continua, 0, 0);
+  agotado.resize(200, 184);
+  image (agotado, 400,250);
   continuar.seguir();
   salir.end();
   regresar.back();
@@ -328,10 +332,17 @@ void pausa() {
   regresar.click();
 }
 void replay() {
+  muerto.resize(200, 184);
   image (fondo, 0, 0);
+  image(muerto, 350, 160);
   if (distancia > max_distancia)max_distancia = distancia;
-  text(distancia, 400, 400);
-  text(max_distancia, 400, 500);
+  textSize(65);
+  text("Game Over", 300, 100);
+  textSize(40);
+  text("Tu puntaje: ", 250, 430);
+  text(distancia, 600, 430);
+  text("Mejor puntaje: ", 250, 500);
+  text(max_distancia, 600, 500);
   gamer.x=50;
   salir.end();
   regresar.back();
@@ -346,7 +357,7 @@ void reiniciarJuego() {
   // Reiniciar Jugador
   gamer.vida = 4;
   gamer.x = 50;
-  gamer.y = 400;
+  gamer.y = 345;
   gamer.pos = 0;
 
   // Reiniciar enemigos
