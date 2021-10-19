@@ -5,7 +5,7 @@ Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, contin
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
 int distancia =0, max_distancia, menu=0, carga;
-PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado;
+PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado,cara;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje, muerto;
 ArrayList<Sprite>enemy;
 ArrayList<Rite>object;
@@ -16,6 +16,7 @@ PFont arcade;
 void setup() {
   frameRate(35);
   size(900, 649);
+  cara = loadImage("Cabeza robot.png");
   fondo = loadImage("fondo.jpg");
   plataforma = loadImage("plataforma.png");
   titulo = loadImage("titulo.png");
@@ -196,6 +197,8 @@ void inicio() {
   rect(60, 40, 200, 30);
   fill(#2ECC71);
   rect(60, 40, carga, 30);
+  cara.resize(110,110);
+  image(cara,0,15);
   //text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
