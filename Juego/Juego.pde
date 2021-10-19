@@ -4,13 +4,14 @@ Player gamer;
 Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
-int distancia =0, max_distancia = 0, menu=0;
+int distancia =0, max_distancia, menu=0;
 PImage fondo, plataforma, titulo, regla, credito, clasificación, continua;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje;
 ArrayList<Sprite>enemy;
 ArrayList<Rite>object;
 boolean press;
 float referenciaInicio = 0;
+PFont arcade;
 
 void setup() {
   frameRate(35);
@@ -75,9 +76,9 @@ void draw() {
   case 5:
     pausa();
     break;
-    /*case 6:
-     
-     break;*/
+  case 6:
+    replay();
+    break;
   }
   jugar.click();
   opciones.click();
@@ -139,7 +140,7 @@ void inicio() {
     Sprite miEnemigo = enemy.get(indiceEnemigoReset);
     miEnemigo.reset();
   }
-//Choques balas vs objetos
+  //Choques balas vs objetos
   int indiceobjectReset = -1, indiceBallaEliminar = -1;
   int cantBallas = bullets.size();
   for (int i = 0; i < cantBallas; i++) {
@@ -161,7 +162,7 @@ void inicio() {
     Rite miobject = object.get(indiceobjectReset);
     miobject.reset();
   }
-//Choques entre objetos
+  //Choques entre objetos
   int cantEnem = enemy.size();
   for (int w = 0; w < cantEnem; w++) {
     Sprite miEnemigo = enemy.get(w);
@@ -179,15 +180,16 @@ void inicio() {
     }
   }
   if (gamer.vida==0) {
-    exit();
-    /*if (distancia > max_distancia)
-     max_distancia = distancia;*/
+    menu=6;
   }
   image(puntaje, 700, 10);
+  arcade = createFont("ARCADE.TTF", 128);
+  textFont(arcade);
   textSize(40);
   fill(255);
   text(distancia, 730, 55);
-  text(gamer.vida, 30, 30);
+
+  //text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
   if (salir.click()==true)exit();
@@ -202,7 +204,7 @@ void startGame() {
   salir= new Botones(810, 620, 82, 21);
   regresar=new Botones(720, 590, 179, 27);
   pausa=new Botones(580, 90, 119, 21);
-  continuar = new Botones(300, 200, 411, 27);
+  continuar = new Botones(280, 200, 411, 27);
   audon= new Botones(((width/2)-80), height/2, 182, 21);
   creditos= new Botones(20, 615, 117, 15);
   gamer = new Player();
@@ -322,6 +324,19 @@ void pausa() {
   if (regresar.click()==true)menu=0;
   if (continuar.click()==true)menu=1;
   continuar.click();
+  salir.click();
+  regresar.click();
+}
+void replay() {
+  image (fondo, 0, 0);
+  if (distancia > max_distancia)max_distancia = distancia;
+  text(distancia, 400, 400);
+  text(max_distancia, 400, 500);
+  gamer.x=50;
+  salir.end();
+  regresar.back();
+  if (salir.click()==true)exit();
+  if (regresar.click()==true)menu=0;
   salir.click();
   regresar.click();
 }
