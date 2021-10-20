@@ -1,31 +1,29 @@
-class Rite {
-  PImage image;
+class Tite {
+  PImage imagenes;
   PVector center, cambio;
   int alto, ancho, tipo;
 
-  Rite(PImage archivo, int x, int y, int tipo)
+  public  Tite(PImage archivo, int x, int y, int tipo)
   {
-    image = archivo;
-    alto = image.height;
-    ancho = image.width;
+    imagenes = archivo;
+    alto = imagenes.height;
+    ancho = imagenes.width;
     center = new PVector(x, y);
     cambio= new PVector(0, 0);
     this.tipo = tipo;
   }
   void mostrar() {
-    image(image, center.x-100, center.y, 75, 75);
+    image(imagenes, center.x, center.y, 100, 100);
   }
   void mover()
   {
     center.x += cambio.x;
-    if (center.y > -50 && center.y < 400)
-      center.y += 5;
     if (center.x < 0) {
       reset();
     }
   }
   void reset() {
     center.x = width;
-    center.y = random(0, 50);
+    center.y = random(100, 400);
   }
 }

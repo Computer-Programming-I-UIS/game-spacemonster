@@ -5,10 +5,11 @@ Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, contin
 ArrayList<Bullet> bullets; //Declarar array para los disparos
 int posx=0, pos, posEne, speed = 10, posObj;
 int distancia =0, max_distancia, menu=0, carga;
-PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado,cara;
+PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado, cara;
 PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje, muerto;
 ArrayList<Sprite>enemy;
 ArrayList<Rite>object;
+ArrayList<Tite>Rayo;
 boolean press;
 float referenciaInicio = 0;
 PFont arcade;
@@ -119,6 +120,12 @@ void inicio() {
       object.get(i).mostrar();
       object.get(i).mover();
     }
+  if (distancia >= 50)
+    for (int i= 0; i <Rayo.size(); i++)
+    {
+      Rayo.get(i).mostrar();
+      Rayo.get(i).mover();
+    }
   handleBullets();
   distancia =int( ( millis()/80 ) - referenciaInicio );
 
@@ -130,8 +137,8 @@ void inicio() {
     Bullet laBala = bullets.get(i);
     int cantEnem = enemy.size();
     for (int j = 0; j < cantEnem; j++) {
-      Sprite miEnemigo = enemy.get(j);
-      if (miEnemigo.center.x < laBala.x+30  && laBala.y+30 > miEnemigo.center.y && miEnemigo.center.y+75 > laBala.y ) {
+      Sprite miRayo = enemy.get(j);
+      if (miRayo.center.x < laBala.x+30  && laBala.y+30 > miRayo.center.y && miRayo.center.y+75 > laBala.y ) {
 
         indiceBalaEliminar = i;
 
@@ -142,8 +149,8 @@ void inicio() {
 
   if ( indiceEnemigoReset != -1 && indiceBalaEliminar != -1) {
     bullets.remove(indiceBalaEliminar);
-    Sprite miEnemigo = enemy.get(indiceEnemigoReset);
-    miEnemigo.reset();
+    Sprite miRayo = enemy.get(indiceEnemigoReset);
+    miRayo.reset();
   }
   //Choques balas vs objetos
   int indiceobjectReset = -1, indiceBallaEliminar = -1;
@@ -170,10 +177,19 @@ void inicio() {
   //Choques entre objetos
   int cantEnem = enemy.size();
   for (int w = 0; w < cantEnem; w++) {
-    Sprite miEnemigo = enemy.get(w);
-    if ( (miEnemigo.center.x < gamer.x+30 + 80)  && ( (miEnemigo.center.y+80 < gamer.y+5+120 && miEnemigo.center.y+65 > gamer.y ) || (miEnemigo.center.y < gamer.y+5+120 && miEnemigo.center.y > gamer.y ) )  ) {
+    Sprite miRayo = enemy.get(w);
+    if ( (miRayo.center.x < gamer.x+30 + 80)  && ( (miRayo.center.y+80 < gamer.y+5+120 && miRayo.center.y+65 > gamer.y ) || (miRayo.center.y < gamer.y+5+120 && miRayo.center.y > gamer.y ) )  ) {
       gamer.vida -= 1;
-      miEnemigo.reset();
+      miRayo.reset();
+    }
+  }
+    //Choques entre objetos
+  int cantRayo = Rayo.size();
+  for (int b = 0; b < cantRayo; b++) {
+    Tite miRayo = Rayo.get(b);
+    if ( (miRayo.center.x < gamer.x+30 + 50)  && ( (miRayo.center.y+20 < gamer.y+5+120 && miRayo.center.y+35 > gamer.y ) || (miRayo.center.y < gamer.y+5+120 && miRayo.center.y > gamer.y ) )  ) {
+      gamer.vida += 1;
+      miRayo.reset();
     }
   }
   //Choque entre enemigos
@@ -189,7 +205,7 @@ void inicio() {
     menu=6;
   }
   image(puntaje, 700, 10);
-  
+
   textFont(arcade);
   textSize(40);
   fill(255);
@@ -198,8 +214,8 @@ void inicio() {
   rect(60, 40, 200, 30);
   fill(#2ECC71);
   rect(60, 40, carga, 30);
-  cara.resize(110,110);
-  image(cara,0,15);
+  cara.resize(110, 110);
+  image(cara, 0, 15);
   //text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
@@ -234,9 +250,19 @@ void startGame() {
     if (pos == 2)
       pos =1;
   }
+
   for (Sprite s : enemy)
   {
     s.cambio.x = -10;
+  }
+  Rayo = new ArrayList<Tite>();
+  pos = 1;
+  PImage imagenes =loadImage("rayo"+(pos)+".png");
+  Rayo.add(new Tite(imagenes, width, (int)random(200, 400), pos));
+  pos++;
+  for (Tite s : Rayo)
+  {
+    s.cambio.x = -5;
   }
   object = new ArrayList<Rite>();
   pos = 1;
@@ -300,9 +326,9 @@ void creadores() {
   fill(#EC9706);
   textFont(arcade);
   textSize(40);
-  text("Agradecimientos",330,600);
+  text("Agradecimientos", 330, 600);
   fill(#9074E2);
-  text("Alex Mantilla",350,630);
+  text("Alex Mantilla", 350, 630);
   salir.end();
   regresar.back();
   if (salir.click()==true)exit();

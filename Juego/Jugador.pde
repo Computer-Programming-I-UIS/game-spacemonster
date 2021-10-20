@@ -4,7 +4,6 @@ class Player {
   int tls;
   int coolDown;
   boolean salto, mostrar = true;
-  ;
   PImage[] img;
   int vida;
   public  Player() {
