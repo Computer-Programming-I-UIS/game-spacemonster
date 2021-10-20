@@ -44,6 +44,8 @@ Este juego está dirigido a todo el público
 
 ![Instrucciones](reglas.jpg)
 
+*Al momento de disparar verifique que las mayúsculas este apagadan, porque el programa no las reconoce
+
 ## Herramientas utilizadas
 
 Processing - Para escribir el programa
@@ -59,6 +61,7 @@ https://sumo.app/paint/ - Para crear la imagen de la plataforma
 ## Autores
 
 Jonathan Gil
+
 Carlos Cuadros
 
 
