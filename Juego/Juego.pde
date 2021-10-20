@@ -238,7 +238,8 @@ void inicio() {
   textFont(arcade);
   textSize(40);
   fill(255);
-  text(distancia, 730, 55);
+  text(distancia, 730, 60);
+  text("M",860,60);
   fill(0);
   rect(60, 40, 200, 30);
   fill(#2ECC71);
@@ -417,8 +418,10 @@ void replay() {
   textSize(40);
   text("Tu puntaje: ", 250, 430);
   text(distancia, 600, 430);
+  text("M", 700, 430);
   text("Mejor puntaje: ", 250, 500);
   text(max_distancia, 600, 500);
+  text("M", 700, 500);
   gamer.x=50;
   salir.end();
   regresar.back();
