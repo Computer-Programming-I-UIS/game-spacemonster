@@ -44,7 +44,7 @@ Este juego está dirigido a todo el público
 
 ![Instrucciones](reglas.jpg)
 
-*Al momento de disparar verifique que las mayúsculas este apagadan, porque el programa no las reconoce
+_Al momento de disparar verifique que las mayúsculas este apagadan, porque el programa no las reconoce_
 
 ## Herramientas utilizadas
 
