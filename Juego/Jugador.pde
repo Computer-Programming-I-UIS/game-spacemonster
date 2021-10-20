@@ -1,4 +1,5 @@
 class Player {
+  //Variables de la clase
   float x, y, gr, vel;
   int pos;
   int tls;
@@ -7,6 +8,7 @@ class Player {
   PImage[] img;
   int vida;
   public  Player() {
+    //Constructor de la clase
     this.x = width/2;
     this.y = height-50;
     this.tls = 0;
@@ -32,7 +34,7 @@ class Player {
     img[11] = loadImage("Salto(3).png");
     img[12] = loadImage("Salto(4).png");
   }
-  void display() {
+  void display() {//Se dibuja al personaje
     if (mostrar)image(img[pos], x, y, 150, 130);
     y += vel;
     if (y+33<380) {
@@ -42,6 +44,7 @@ class Player {
       vel = 0;
       pos = 0;
     }
+    //Se dibujan los movientos del personaje
     if (keyPressed && key == CODED)
     {
       switch(keyCode) {
@@ -73,18 +76,18 @@ class Player {
         pos = 0;
     }
   }
-  void shoot() {
+  void shoot() {//Disparo
     if (millis() - tls > coolDown) {
       Bullet bullet = new Bullet(this.x+13, this.y, -speed);
       bullets.add(bullet);
       tls = millis();
     }
   }
-  void live(){
+  void live(){//Barra de vida
     carga = int(map(gamer.vida, 0, 4, 0, 200));
   }
 }
-void keyPressed() {
+void keyPressed() {//Se confirma si se oprimió la tecla designada para el disparo
   if (key == 'x')
     gamer.shoot();
 }

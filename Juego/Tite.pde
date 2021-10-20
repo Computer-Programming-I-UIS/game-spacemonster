@@ -1,10 +1,12 @@
 class Tite {
+  //Variables de la clase
   PImage imagenes;
   PVector center, cambio;
   int alto, ancho, tipo;
 
   public  Tite(PImage archivo, int x, int y, int tipo)
   {
+    //Constructor de la clase
     imagenes = archivo;
     alto = imagenes.height;
     ancho = imagenes.width;

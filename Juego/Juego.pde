@@ -1,23 +1,51 @@
+/*
+-----------------------------SpaceMonster-------------------------------
+Proyecto Final de la materia Programación de Computadores I
+
+Autores: Jonathan Gil
+         Carlos Cuadros
+
+Fecha: 20/10/2021
+
+Descripción:   SpaceMonster es un juego de un solo jugador con la misión de recorrer 
+               la mayor distancia posible.
+               
+               Charly(El personaje) empieza en una distancia 0 y va avanzando, en el
+               camino se cruza con diferentes Aliens y rocas que caen del cielo.
+               Charly está equipado con un arma que es capaz de destruir a los Aliens
+               y a las rocas. De no destruir a alguno, este chocara con Charly 
+               causandole daño haciendo que este pierda energia, Charly solo puede 
+               sobrevivir a cuatro choques, recargalo en el camino para ir más lejos.
+               
+               
+*Requiere libreria Sound               
+
+*/
+
 import processing.sound.*; //Se importa la libreria Sound
-SoundFile afondo;
-Player gamer;
-Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;
-ArrayList<Bullet> bullets; //Declarar array para los disparos
+SoundFile afondo;//Se nombra el objeto de audio
+Player gamer;//Se nombra el jugador(gamer) como un objeto de la clase Player
+Botones jugar, salir, opciones, audon, regresar, reglas, creditos, pausa, continuar;//Se nombran todos los objetos de la clase Botones
+
+//Declaración de la variables
 int posx=0, pos, posEne, speed = 10, posObj;
 int distancia =0, max_distancia, menu=0, carga;
-PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado, cara;
-PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje, muerto;
-ArrayList<Sprite>enemy;
-ArrayList<Rite>object;
-ArrayList<Tite>Rayo;
 boolean press;
 float referenciaInicio = 0;
-PFont arcade;
+PImage fondo, plataforma, titulo, regla, credito, clasificación, continua, rayo, agotado, cara;
+PImage grupo, audios, apk, diseñadores, diseñoentorno, diseñopersonajes, programadores, musica, Plataforma, personajes, puntaje, muerto;
+
+//Declaración de todos los Array
+ArrayList<Bullet> bullets; //Declarar array para los disparos
+ArrayList<Sprite>enemy;//Declarar array para los enemigos
+ArrayList<Rite>object;//Declarar array para los meteoros
+ArrayList<Tite>Rayo;//Declarar array para los rayos
+PFont arcade;//Se llama a una fuente de texto
 
 void setup() {
   frameRate(35);
-  size(900, 649);
-  cara = loadImage("Cabeza robot.png");
+  size(900, 649); //Se crea la pantalla
+  cara = loadImage("Cabeza robot.png"); //Se cargan todas las imagenes generales
   fondo = loadImage("fondo.jpg");
   plataforma = loadImage("plataforma.png");
   titulo = loadImage("titulo.png");
@@ -45,7 +73,7 @@ void setup() {
 }
 void draw() {
   switch(menu) {
-  case 0:
+  case 0: //Se dibuja el menú con el fondo y los diferentes botones q tiene
     posx=0;
     image(fondo, posx, 0);
     clasificación.resize(50, 70);
@@ -56,7 +84,7 @@ void draw() {
     salir.end();
     reglas.rules();
     creditos.make();
-    if (jugar.click()==true) {
+    if (jugar.click()==true) { 
       menu=1;
       reiniciarJuego();
       referenciaInicio= millis()/80;
@@ -67,25 +95,25 @@ void draw() {
     if (salir.click()==true)exit();
     break;
   case 1:
-    inicio();
+    inicio(); //Se inicia el juego
     break;
   case 2:
-    setting();
+    setting(); //Se dibujan las configuraciones que puede hacer el usuario(Apagar/Encender   el audio)
     break;
   case 3:
-    rules();
+    rules(); //Se dibuja un tutorial 
     break;
   case 4:
-    creadores();
+    creadores(); //Se dibujan los créditos
     break;
   case 5:
-    pausa();
+    pausa(); //Se dibuja la pantalla de pausa
     break;
   case 6:
-    replay();
+    replay(); //Se dibuja la pantalla de fin del juego
     break;
   }
-  jugar.click();
+  jugar.click();//Se llama a la función click()
   opciones.click();
   salir.click();
   regresar.click();
@@ -94,7 +122,7 @@ void draw() {
   creditos.click();
 }
 
-void handleBullets() {
+void handleBullets() {  
   for (int i = 0; i < bullets.size(); i++) {
     Bullet b = (Bullet) bullets.get(i);
     b.move();
@@ -146,7 +174,8 @@ void inicio() {
       }
     }
   }
-
+  
+  // Se borra el rayo tras el choque
   if ( indiceEnemigoReset != -1 && indiceBalaEliminar != -1) {
     bullets.remove(indiceBalaEliminar);
     Sprite miRayo = enemy.get(indiceEnemigoReset);
@@ -216,7 +245,6 @@ void inicio() {
   rect(60, 40, carga, 30);
   cara.resize(110, 110);
   image(cara, 0, 15);
-  //text(gamer.vida, 30, 30);
   salir.end();
   pausa.intermedio();
   if (salir.click()==true)exit();
@@ -226,6 +254,7 @@ void inicio() {
   gamer.live();
 }
 void startGame() {
+  //Se dan los parametros de los constructores
   jugar= new Botones(400, 400, 113, 27);
   opciones= new Botones(370, 437, 173, 27);
   reglas= new Botones(315, 477, 279, 21);
@@ -239,6 +268,7 @@ void startGame() {
   bullets = new ArrayList<Bullet>();
   enemy = new ArrayList<Sprite>();
   pos = 1;
+  //Se crean los enemigos
   PImage img =loadImage("oponente"+(pos)+".png");
   enemy.add(new Sprite(img, width, (int)random(200, 400), pos));
   pos++;
@@ -255,7 +285,8 @@ void startGame() {
   {
     s.cambio.x = -10;
   }
-  Rayo = new ArrayList<Tite>();
+  //Se crean los rayos
+  Rayo = new ArrayList<Tite>();//Se declara el objeto de la clase Tite
   pos = 1;
   PImage imagenes =loadImage("rayo"+(pos)+".png");
   Rayo.add(new Tite(imagenes, width, (int)random(200, 400), pos));
@@ -264,7 +295,8 @@ void startGame() {
   {
     s.cambio.x = -5;
   }
-  object = new ArrayList<Rite>();
+  //Se crean las rocas
+  object = new ArrayList<Rite>();//Se declara el objeto de la clase Rite
   pos = 1;
   PImage image =loadImage("object"+(pos)+".png");
   object.add(new Rite(image, (int)random(0, 400), width, pos));

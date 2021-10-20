@@ -1,10 +1,12 @@
 class Rite {
+  //Variables de la clase
   PImage image;
   PVector center, cambio;
   int alto, ancho, tipo;
 
   Rite(PImage archivo, int x, int y, int tipo)
   {
+    //Constructor de la clase
     image = archivo;
     alto = image.height;
     ancho = image.width;
@@ -12,10 +14,10 @@ class Rite {
     cambio= new PVector(0, 0);
     this.tipo = tipo;
   }
-  void mostrar() {
+  void mostrar() {//Se dibujan las rocas
     image(image, center.x-100, center.y, 75, 75);
   }
-  void mover()
+  void mover()//Mmovimiento de las rocas
   {
     center.x += cambio.x;
     if (center.y > -50 && center.y < 400)
@@ -24,7 +26,7 @@ class Rite {
       reset();
     }
   }
-  void reset() {
+  void reset() {//Se regrsan a su origen
     center.x = width;
     center.y = random(0, 50);
   }

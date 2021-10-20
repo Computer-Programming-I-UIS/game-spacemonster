@@ -1,11 +1,13 @@
 class Botones {
-  int x, y, alto, ancho;
+  int x, y, alto, ancho; //Variables de la clase
   Botones(int x, int y, int ancho, int alto) {
+    //Constructor de la clase
     this.x=x;
     this.y=y;
     this.alto=alto;
     this.ancho=ancho;
   }
+  //Se dibujan los botones
   void display() {
     PImage jugar;
     jugar = loadImage("jugar.png");
@@ -57,6 +59,7 @@ class Botones {
     continuar = loadImage("continuar.png");
     image(continuar,this.x,this.y);
   }
+  //Se confirma si fueron presionados
   boolean click() {
     boolean press = false;
     if (mousePressed) {

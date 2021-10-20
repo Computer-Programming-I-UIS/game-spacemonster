@@ -1,10 +1,12 @@
 class Sprite {
+  //Variables de la clase
   PImage img, rayo;
   PVector center, cambio;
   int alto, ancho, tipo;
 
   Sprite(PImage archivo, int x, int y, int tipo)
   {
+    //Constructor de la clase
     img = archivo;
     alto = img.height;
     ancho = img.width;
@@ -12,10 +14,10 @@ class Sprite {
     cambio= new PVector(0, 0);
     this.tipo = tipo;
   }
-  void mostrar() {
+  void mostrar() {//Se dibujan los Aliens
     image(img, center.x, center.y, 75, 75);
   }
-  void mover()
+  void mover()//Movimiento de los Aliens
   {
     center.x += cambio.x;
     if (center.y > 0 && center.y < 400)
@@ -24,10 +26,10 @@ class Sprite {
       reset();
     }
   }
-  void display() {
+  void display() {//Se dibuja el rayo
     image(rayo, center.x-100, center.y, 25, 25);
   }
-  void move()
+  void move()//Movimiento del rayo
   {
     center.x += cambio.x;
     if (center.x < 0) {
